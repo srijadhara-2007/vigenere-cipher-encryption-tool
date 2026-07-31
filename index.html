@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VIGENÈRE CIPHER — Advanced Classical Encryption</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="scanline" aria-hidden="true"></div>
+    <div class="glow-orb glow-orb--1" aria-hidden="true"></div>
+    <div class="glow-orb glow-orb--2" aria-hidden="true"></div>
+
+    <main class="app">
+      <!-- Header -->
+      <header class="header">
+        <div class="header__top">
+          <div class="header__brand">
+            <span class="shield-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+            </span>
+            <div class="header__titles">
+              <h1>VIGENÈRE CIPHER</h1>
+              <p class="header__subtitle">Advanced Classical Encryption</p>
+            </div>
+          </div>
+          <span class="status-badge" id="statusBadge">
+            <span class="status-badge__dot"></span>
+            SECURE CHANNEL
+          </span>
+        </div>
+        <p class="header__desc">
+          A polyalphabetic cipher that uses a repeating keyword to shift each letter by a different
+          amount, defeating simple frequency analysis. Encrypt or decrypt with precision.
+        </p>
+      </header>
+
+      <!-- Tool card -->
+      <section class="card tool" aria-label="Vigenère Cipher tool">
+        <!-- Tabs -->
+        <div class="tabs" role="tablist" aria-label="Cipher mode">
+          <button class="tab tab--active" role="tab" aria-selected="true" data-mode="encrypt" id="tabEncrypt">
+            Encrypt
+          </button>
+          <button class="tab" role="tab" aria-selected="false" data-mode="decrypt" id="tabDecrypt">
+            Decrypt
+          </button>
+          <span class="tabs__indicator" id="tabIndicator"></span>
+        </div>
+
+        <!-- Input -->
+        <div class="field">
+          <div class="field__label-row">
+            <label for="inputText" class="field__label">Input Message</label>
+            <span class="counter" id="inputCounter">0 / 5000</span>
+          </div>
+          <textarea
+            id="inputText"
+            class="textarea"
+            rows="5"
+            maxlength="5000"
+            placeholder="Type or paste your message here..."
+            aria-label="Input message"
+          ></textarea>
+          <p class="field__error" id="inputError" aria-live="polite"></p>
+        </div>
+
+        <!-- Keyword -->
+        <div class="field">
+          <div class="field__label-row">
+            <label for="keyword" class="field__label">Secret Keyword</label>
+            <span class="counter" id="keywordCounter">0 / 50</span>
+          </div>
+          <input
+            type="text"
+            id="keyword"
+            class="input"
+            maxlength="50"
+            placeholder="Enter keyword (letters only)..."
+            aria-label="Secret keyword"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <p class="field__hint" id="keywordHint">The keyword repeats automatically to match your message length.</p>
+          <p class="field__error" id="keywordError" aria-live="polite"></p>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button class="btn btn--primary" id="actionBtn">
+            <span class="btn__label">Encrypt</span>
+            <span class="btn__kbd">Ctrl + Enter</span>
+          </button>
+          <button class="btn btn--ghost" id="clearBtn">Clear</button>
+        </div>
+
+        <!-- Output -->
+        <div class="field">
+          <div class="field__label-row">
+            <label for="outputText" class="field__label">Output</label>
+            <span class="counter" id="outputCounter">0</span>
+          </div>
+          <textarea
+            id="outputText"
+            class="textarea textarea--output"
+            rows="5"
+            readonly
+            placeholder="Result will appear here..."
+            aria-label="Output message"
+          ></textarea>
+          <div class="output-actions">
+            <button class="btn btn--copy" id="copyBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              Copy Output
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Info card -->
+      <section class="card info" aria-label="How the Vigenère Cipher works">
+        <h2 class="info__title">
+          <span class="info__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+          </span>
+          How the Vigenère Cipher Works
+        </h2>
+        <p class="info__text">
+          The Vigenère Cipher is a polyalphabetic substitution cipher. Each letter in the plaintext
+          is shifted by an amount determined by the corresponding letter of a repeating keyword.
+          Unlike the Caesar Cipher, the same plaintext letter can map to different ciphertext letters,
+          making it far more resistant to frequency analysis.
+        </p>
+        <div class="info__grid">
+          <div class="info__step">
+            <span class="info__step-num">01</span>
+            <p>Choose a secret keyword (e.g. <code>KEY</code>).</p>
+          </div>
+          <div class="info__step">
+            <span class="info__step-num">02</span>
+            <p>Repeat it to match the message length, skipping non-letters.</p>
+          </div>
+          <div class="info__step">
+            <span class="info__step-num">03</span>
+            <p>Shift each plaintext letter by the keyword letter's position.</p>
+          </div>
+        </div>
+        <div class="info__example">
+          <div class="info__example-row">
+            <span class="info__example-label">Plain</span>
+            <span class="info__example-value">HELLO WORLD</span>
+          </div>
+          <div class="info__example-row">
+            <span class="info__example-label">Key</span>
+            <span class="info__example-value">KEYKEYKEYK</span>
+          </div>
+          <div class="info__example-row info__example-row--result">
+            <span class="info__example-label">Cipher</span>
+            <span class="info__example-value">RIJVS GYVNV</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        Built with HTML, CSS &amp; JavaScript — No frameworks, no dependencies.
+      </footer>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
